@@ -75,13 +75,21 @@ class Admin(User):
 user1 = User(111, 'Vasya')
 user2 = User(112, 'Stepa')
 user3 = User(113, 'Masha')
+user4 = User(113, 'Bobby')
+user5 = User(113, 'Harry')
+user6 = User(113, 'Georg')
 admin1 = Admin(222, 'Misha')
 
 #Добавление юзеров
 admin1.add_user(user1)
 admin1.add_user(user2)
-admin1.add_user(user2)
 admin1.add_user(user3)
+admin1.add_user(user4)
+admin1.add_user(user5)
+admin1.add_user(user6)
+
+#Повторное добавление юзера, который уже есть
+admin1.add_user(user2)
 
 #Удаление юзера из списка
 admin1.remove_user(user3)

@@ -75,9 +75,9 @@ class Admin(User):
 user1 = User(111, 'Vasya')
 user2 = User(112, 'Stepa')
 user3 = User(113, 'Masha')
-user4 = User(113, 'Bobby')
-user5 = User(113, 'Harry')
-user6 = User(113, 'Georg')
+user4 = User(114, 'Bobby')
+user5 = User(115, 'Harry')
+user6 = User(116, 'Georg')
 admin1 = Admin(222, 'Misha')
 
 #Добавление юзеров

@@ -13,44 +13,78 @@
 # что это просто список экземпляров `User`).
 #3.Инкапсуляция данных: Убедись, что атрибуты классов защищены от прямого доступа и
 # модификации снаружи. Предоставь доступ к необходимым атрибутам через методы (например, get и set методы).
-class Car():
-    def __init__(self, make, model):
-        self.public_make = make     # 'публичный атрибут'
-        self._protected_model = model   # 'защищенный атрибут'
-        self.__private_year = 2022  #'приватный атрибут'
 
-    def public_func(self):
-        return f'Это открытый метод. Машина: {self.public_make} {self._protected_model}'
+class User():
+    def __init__(self, id, name):
+        self._id = id
+        self._name = name
+        self._access_level = 'user'
 
-    def _protected_func(self):
-        return "Это защищенный метод"
+    def get_id(self):
+        return self._id
 
-    def __private_func(self):
-        return 'Это приватный метод'
+    def set_id(self, value):
+        self._id = value
+
+    def get_name(self):
+        return self._name
+
+    def set_name(self, value):
+        self._name = value
+
+    def get_access_level(self):
+        return self._access_level
+
+    def set_access_level(self, value):
+        if value != 'user' or value != 'admin':
+            print('this access level is denied')
+        else:
+            self._access_level = value
+
+    def __str__(self):
+        return f"{self._id}, {self._name}"
 
 
-class ElectricCar(Car):
-    def __init__(self, make, model, battery_size):
-        super().__init__(make, model)
-        self.battery_size = battery_size
+class Admin(User):
+    user_list = []
+    def __init__(self, id, name):
+        super().__init__(id, name)
+        self._access_level = 'admin'
 
-    def get_details(self):
-        #Можно обратиться только к открытому и защищенному атрибуту
-        details = f'{self.public_make} {self._protected_model}, Батарея: {self.battery_size} kWh.'
-        #нельзя напрямую обратиться к  __private_func() и  self.__private_year
-        return details
+    @classmethod
+    def add_user(cls, user):
+        if isinstance(user, User) and user not in cls.user_list:
+            cls.user_list.append(user)
+        else:
+            print('user doesn`t exist or is found in list')
 
-#Создание экемпляра класса
-tesla = ElectricCar('Tesla', 'Model S', 100)
+    @classmethod
+    def remove_user(cls, user):
+        if isinstance(user, User) and user in cls.user_list:
+            cls.user_list.remove(user)
+        else:
+            print('user is not found')
 
-#Доступ к открытому атрибуту и открытому методу
-print(tesla.public_make)
-print(tesla.public_func())
+    @classmethod
+    def print_list(cls):
+        for i in cls.user_list:
+            print(i)
 
-#Доступ к защищенному атрибуту (не рекомендуется, но возможно)
-print(tesla._protected_model)
-print(tesla._protected_func())
 
-#Доступ к приватному атрибуту и методу невозможен напрямую.
-# Но можно обойти это ограничение (не рекомендуется)
-print(tesla._Car__private_year)     #Лучше не использовать такой прием
+#СОздание юзеров и админов
+user1 = User(111, 'Vasya')
+user2 = User(112, 'Stepa')
+user3 = User(113, 'Masha')
+admin1 = Admin(222, 'Misha')
+
+#Добавление юзеров
+admin1.add_user(user1)
+admin1.add_user(user2)
+admin1.add_user(user2)
+admin1.add_user(user3)
+
+#Удаление юзера из списка
+admin1.remove_user(user3)
+
+#Вывод списка юзеров построчно
+admin1.print_list()

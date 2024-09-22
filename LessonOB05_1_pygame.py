@@ -1,3 +1,5 @@
+#Это БАЗА для работы с модулем pygame
+
 import pygame
 import time
 

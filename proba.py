@@ -146,13 +146,13 @@ def main():
         if (paddle1.y <= ball.y <= paddle1.y + paddle1.height
                 and paddle1.x <= ball.x <= paddle1.x + paddle1.width):
             ball.speed_y = -ball.speed_y
-            #ball.speed_x = -ball.speed_x
+            ball.speed_x = -ball.speed_x
             score_paddle1 += 1   # Увеличиваем очки paddle1
 
         if (paddle2.y <= ball.y + ball.radius <= paddle2.y + paddle2.height
                 and paddle2.x <= ball.x <= paddle2.x + paddle2.width):
             ball.speed_y = -ball.speed_y
-            #ball.speed_x = -ball.speed_x
+            ball.speed_x = -ball.speed_x
             score_paddle2 += 1  # Увеличиваем очки paddle2
 
         # if ball.x <= 0 or ball.x >= SCREEN_WIDTH:

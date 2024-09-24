@@ -1,6 +1,5 @@
 import random
 from random import randint, choice
-from abc import ABC, abstractmethod
 
 class Hero:
     def __init__(self, name, health=100, power=20):
@@ -29,13 +28,14 @@ class Hero:
         else:
             return False
 
-    def who_wins(self, other):
-        if self.is_alive and not other.is_alive:
-             print(f'{self.name} Победил')
-        elif other.is_alive and not self.is_alive:
-            print(f'{other.name} Победил')
-        else:
-            print('Битва продолжается до победного!')
+    # def who_wins(self, other):
+        # if self.is_alive and not other.is_alive:
+        #      print(f'{self.name} Победил')
+        # elif other.is_alive and not self.is_alive:
+        #     print(f'{other.name} Победил')
+        # else:
+        #     print('Битва продолжается до победного!')
+
 
 
 #На случай, если нужно будет добавлять для классовв различные методы

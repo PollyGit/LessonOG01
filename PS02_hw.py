@@ -35,6 +35,7 @@ if response2.status_code >= 200 & response2.status_code < 400:
 else:
     print('Произошла ошибка')
 
+
 # Задание 3: Отправка данных
 url2 = 'https://jsonplaceholder.typicode.com/posts'
 

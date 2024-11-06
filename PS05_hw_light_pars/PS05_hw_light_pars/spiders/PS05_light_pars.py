@@ -21,3 +21,5 @@ class Ps05LightParsSpider(scrapy.Spider):
                 # для ссылки ищем тег a и атрибут href
                 'url': light.css('a').attrib['href']
             }
+
+

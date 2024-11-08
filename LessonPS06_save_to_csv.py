@@ -7,6 +7,8 @@ import time # Импортируем модуль со временем
 import csv  # Импортируем модуль csv
 from selenium import webdriver  # Импортируем Selenium
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Инициализируем браузер или driver = webdriver.Chrome()
 driver = webdriver.Firefox()
@@ -17,13 +19,15 @@ url = "https://tomsk.hh.ru/vacancies/programmist"
 # Открываем веб-страницу
 driver.get(url)
 
-# Задаём 3 секунды ожидания, чтобы веб-страница успела прогрузиться
-time.sleep(3)
+# Ожидание загрузки страницы
+wait = WebDriverWait(driver, 10)
+wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.vacancy-info--umZA61PpMY07JVJtomBA')))
+
 
 # Находим все карточки с вакансиями с помощью названия класса
 # и сохраняем в пременную vacancies
 # Названия классов берём с кода сайта
-vacancies = driver.find_elements(By.CLASS_NAME, 'vacancy-card--H8LvOiOGPll0jZvYpxIF')
+vacancies = driver.find_elements(By.CSS_SELECTOR, 'div.vacancy-info--umZA61PpMY07JVJtomBA')
 
 # Выводим вакансии на экран
 print(vacancies)
@@ -33,24 +37,45 @@ parsed_data = []
 # Перебираем коллекцию вакансий
 # Используем конструкцию try-except, чтобы "ловить" ошибки, как только они появляются
 for vacancy in vacancies:
-   try:
-        # Находим элементы внутри вакансий по значению
-        # Находим названия вакансии
-        title = vacancy.find_element(By.CSS_SELECTOR, 'span.vacancy-name--SYbxrgpHgHedVTkgI_cA').text
-        # Находим названия компаний
-        company = vacancy.find_element(By.CSS_SELECTOR, 'span.company-info-text--O32pGCRW0YDmp3BHuNOP').text
-        # Находим зарплаты
-        salary = vacancy.find_element(By.CSS_SELECTOR, 'span.compensation-text--cCPBXayRjn5GuLFWhGTJ').text
-        # Находим ссылку с помощью атрибута 'href'
-        # а - тег, класс - bloko - link
-        link = vacancy.find_element(By.CSS_SELECTOR, 'a.bloko-link').get_attribute('href')
-   # Вставляем блок except на случай ошибки - в случае ошибки программа попытается продолжать
-   except:
-       print("произошла ошибка при парсинге")
-       continue
+    #Вариант с урока,не рабочий
+   # try:
+   #      # Находим элементы внутри вакансий по значению
+   #      # Находим названия вакансии
+   #      title = vacancy.find_element(By.CSS_SELECTOR, 'span.vacancy-name--SYbxrgpHgHedVTkgI_cA').text
+   #      # Находим названия компаний
+   #      company = vacancy.find_element(By.CSS_SELECTOR, 'span.company-info-text--O32pGCRW0YDmp3BHuNOP').text
+   #      # Находим зарплаты
+   #      salary = vacancy.find_element(By.CSS_SELECTOR, 'span.compensation-text--cCPBXayRjn5GuLFWhGTJ').text
+   #      # Находим ссылку с помощью атрибута 'href'
+   #      # а - тег, класс - bloko - link
+   #      link = vacancy.find_element(By.CSS_SELECTOR, 'a.bloko-link').get_attribute('href')
+   # # Вставляем блок except на случай ошибки - в случае ошибки программа попытается продолжать
+   # except:
+   #     print("произошла ошибка при парсинге")
+   #     continue
+    #Вариант от куратора, рабочий
+    try:
+        # Извлечение названия и ссылки вакансии
+        title_element = vacancy.find_element(By.CSS_SELECTOR, 'a[data-qa="serp-item__title"]')
+        title = title_element.text
+        link = title_element.get_attribute('href')
 
-       # Вносим найденную информацию в список
-   parsed_data.append([title, company, salary, link])
+        # Извлечение названия компании
+        company_element = vacancy.find_element(By.CSS_SELECTOR, 'a[data-qa="vacancy-serp__vacancy-employer"]')
+        company = company_element.text
+
+        # Извлечение зарплаты
+        try:
+            salary = vacancy.find_element(By.CSS_SELECTOR, 'span[data-qa="vacancy-serp__vacancy-compensation"]').text
+        except:
+            salary = "Не указана"
+
+    except Exception as e:
+        print(f"Произошла ошибка при парсинге: {e}")
+        continue
+
+    # Вносим найденную информацию в список
+    parsed_data.append([title, company, salary, link])
 
 # Закрываем подключение браузер
 driver.quit()

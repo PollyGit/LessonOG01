@@ -13,6 +13,9 @@ def hello_world(password=None):
     # Внутри () пишем название html-файла в кавычках
     return render_template('index.html')
 
+@app.route("/person/")
+def person():
+    return render_template("main.html")
 
 
 

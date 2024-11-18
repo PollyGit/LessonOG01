@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Простой блог</title>
+</head>
+<body>
+
+    <div class="container mt-3">
+        <h1>Давайте познакомимся!</h1>
+        <form method="POST" action="/">
+
+            <label for="name_id"></label>
+            <div class="input-group mb-1">
+              <span class="input-group-text" id="basic-addon1">Имя</span>
+              <input type="text" class="form-control" id="name_id" name="name" placeholder="Введите ваше имя" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            </div>
+
+            <label for="age_id"></label>
+            <div class="input-group mb-1">
+              <span class="input-group-text" id="basic-addon11">Возраст</span>
+              <input type="text" class="form-control" id="age_id" name="age" placeholder="Введите ваш возраст" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            </div>
+
+            <label for="city_id"></label>
+            <div class="input-group mb-1">
+              <span class="input-group-text" id="basic-addon111">Город</span>
+              <input type="text" class="form-control" id="city_id" name="city" placeholder="Из какого вы города?" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            </div>
+
+            <label for="hobby_id"></label>
+            <div class="input-group">
+              <span class="input-group-text">Расскажите о ваших хобби</span>
+              <textarea class="form-control" id="hobby_id" name="hobby" rows="3" aria-label="С текстовым полем"></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+        <hr>
+        <h2 class="mt-4">Карточки пользователей</h2>
+
+        {% for post in posts %}
+        <div class="card mb-3"  style="width: 18rem;">
+          <div class="card-header">
+            Пользователь {{ post.name }}
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ post.age }}</li>
+            <li class="list-group-item">{{ post.city }}</li>
+            <li class="list-group-item">{{ post.hobby }}</li>
+          </ul>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- Подключаем Bootstrap JS и зависимости -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask WTF Form</title>
+</head>
+<body>
+    <h1>Flask WTF Form</h1>
+<!--    # Указываем метод, потому что что нам нужно только отправлять данные-->
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+<!--            label из class NameForm: name = StringField('What is your name?'......)-->
+            {{ form.name.label }}<br>
+<!--        Само текстовое поле и его ширина =32           -->
+            {{ form.name(size=32) }}
+<!--        Отображение ошибок валидации. Поле не дб пустым.
+            Цикл отсматривает ошибки и сохраняет их. Ошибки красного цвета-->
+            {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+<!--        Создание кнопки для отправления формы-->
+            {{ form.submit() }}
+        </p>
+    </form>
+</body>
+</html>

@@ -13,6 +13,8 @@ app = Flask(__name__)
 def index():
     weather = None
     news = None
+    quote = None
+
     # формируем условия для проверки метода.
     # Форму мы пока не создавали, но нам из неё необходимо
     # будет взять только город.
@@ -22,8 +24,9 @@ def index():
         # прописываем переменную, куда будет сохраняться результат и функцию weather с указанием города, который берем из формы
         weather = get_weather(city)
         news = get_news()
+        quote = get_quotes()
         # передаем информацию о погоде и новостях в index.html
-    return render_template("index.html", weather=weather, news=news)
+    return render_template("index.html", weather=weather, news=news, quote=quote)
 
 
 # Функцияя index не взаимодействует с API,
@@ -49,6 +52,17 @@ def get_news():
    response = requests.get(url)
    #Если ключа articles не будет, возвращаться будет пустой список
    return response.json().get('articles', [])
+
+
+def get_quotes():
+    api_key = "6dc59447865c8be9b2546779546467dd"
+    headers = {
+        'Authorization': f'Token token="{api_key}"'
+    }
+    url = f"https://favqs.com/api/qotd"
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json().get('quote', {})
 
 
 # Прописываем запуск для проверки приложения

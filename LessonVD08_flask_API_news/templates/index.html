@@ -30,6 +30,14 @@
             {% endif %}
         </div>
 
+        <div class="result text-center">
+            {% if quote %}
+                <div class="alert alert-info">
+                    <h3>Цитата дня: <br>{{ quote['body'] }}</h3>
+                    <p>Автор цитаты: {{ quote['author'] }}</p>
+                </div>
+            {% endif %}
+        </div>
 
         <div class="result text-center">
             {% if news %}
